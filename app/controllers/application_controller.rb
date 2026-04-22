@@ -11,12 +11,14 @@ class ApplicationController < ActionController::API
     token = authorization.split(" ").last
 
     payload = Utils::Auth.decode_token(token)
+    unless payload
+      render json: { error: "Invalid token" }, status: :unauthorized
+      return
+    end
 
     @user = User.find_or_create_by(uid: payload["sub"]) do |u|
       u.name = payload["name"]
       u.email = payload["email"]
     end
-  rescue
-    render json: { error: "Invalid token" }, status: :unauthorized
   end
 end

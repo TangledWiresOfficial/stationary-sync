@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
+      get "stats" => "stats#index"
       get "journeys" => "journeys#index"
     end
   end
