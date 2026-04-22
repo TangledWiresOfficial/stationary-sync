@@ -4,7 +4,7 @@ class Api::V1::StatsController < ApplicationController
   def index
     render json: {
       users: User.count,
-      journeys: Journey.count,
+      journeys: Journey.count
     }
   end
 end
