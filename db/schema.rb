@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_22_185756) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_24_100832) do
+  create_table "journey_parts", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "journey_id"
+    t.string "line"
+    t.string "station"
+    t.datetime "updated_at", null: false
+    t.index ["journey_id"], name: "index_journey_parts_on_journey_id"
+  end
+
   create_table "journeys", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.integer "timestamp"

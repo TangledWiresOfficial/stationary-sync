@@ -50,3 +50,5 @@ group :development, :test do
 end
 
 gem "jwt"
+
+gem "gb-station-data", ">= 6.0.2"
