@@ -1,5 +1,5 @@
 class Api::V1::JourneysController < ApplicationController
-  before_action :set_journey, only: [:show, :update, :destroy]
+  before_action :set_journey, only: [ :show, :update, :destroy ]
 
   def index
     render json: @user.journeys.as_json(
