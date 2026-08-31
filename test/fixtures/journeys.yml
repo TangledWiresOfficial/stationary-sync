@@ -2,8 +2,10 @@
 
 one:
   timestamp: 1
-  uuid: MyText
+  uuid: abc
+  user: one
 
 two:
   timestamp: 1
-  uuid: MyText
+  uuid: def
+  user: two

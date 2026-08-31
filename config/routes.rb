@@ -12,11 +12,9 @@ Rails.application.routes.draw do
     namespace :v1 do
       get "stats" => "stats#index"
 
-      get "journeys" => "journeys#index"
-      post "journeys" => "journeys#create"
-      get "journeys/:uuid" => "journeys#show"
-      patch "journeys/:uuid" => "journeys#update"
-      delete "journeys/:uuid" => "journeys#destroy"
+      resources :journeys do
+        post "sync", on: :collection
+      end
     end
   end
 end

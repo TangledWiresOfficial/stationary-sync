@@ -1,4 +1,6 @@
 class JourneyPart < ApplicationRecord
+  belongs_to :journey
+
   validates :line, presence: true
   validates_inclusion_of :line, in: GbStationData::LINES
 
