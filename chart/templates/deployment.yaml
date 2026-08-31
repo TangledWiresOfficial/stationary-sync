@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Release.Name }}
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      name: {{ .Release.Name }}
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: {{ .Release.Name }}
+          image: {{ .Values.image }}
+          imagePullPolicy: IfNotPresent
+          env:
+            {{- with .Values }}
+            - name: RAILS_MASTER_KEY
+              valueFrom: {{ toJson .railsMasterKey }}
+
+            - name: STATIONARY_SYNC_BASE_DOMAIN
+              value: {{ quote .base_domain }}
+
+            - name: STATIONARY_SYNC_DATABASE_USERNAME
+              value: {{ quote .database.username }}
+            - name: STATIONARY_SYNC_DATABASE_PASSWORD
+              valueFrom: {{ toJson .database.password }}
+
+            - name: STATIONARY_SYNC_TRUSTED_PROXIES
+              value: {{ .trusted_proxies | join "," | quote }}
+            {{- end }}
+          volumeMounts:
+            - name: stationary-sync-config
+              mountPath: /rails/config/database.yml
+              subPath: database.yml
+          {{- if .Values.resources }}
+          resources: {{ toJson .Values.resources }}
+          {{- end }}
+          ports:
+            - containerPort: 3000
+              protocol: TCP
+      volumes:
+        - name: stationary-sync-config
+          configMap:
+            name: {{ .Release.Name }}-config
+            items:
+              - key: database.yml
+                path: database.yml
+      {{- if .Values.global.imagePullSecrets }}
+      imagePullSecrets: {{ toJson .Values.global.imagePullSecrets }}
+      {{- end }}

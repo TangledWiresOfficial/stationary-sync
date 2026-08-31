@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-config
+data:
+  database.yml: |
+    default: &default
+      adapter: {{ .Values.database.adapter }}
+      host: {{ .Values.database.host }}
+      port: {{ .Values.database.port }}
+      database: {{ .Values.database.database }}
+      username: <%= ENV["STATIONARY_SYNC_DATABASE_USERNAME"] %>
+      password: <%= ENV["STATIONARY_SYNC_DATABASE_PASSWORD"] %>
+      pool: {{ .Values.database.pool }}
+      timeout: {{ .Values.database.timeout }}
+
+    production:
+      primary:
+        <<: *default
+      cache:
+        <<: *default
+      queue:
+        <<: *default
+      cable:
+        <<: *default

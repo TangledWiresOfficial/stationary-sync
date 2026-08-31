@@ -1,0 +1,41 @@
+global:
+  imagePullSecrets: []
+
+image: ghcr.io/tangledwiresofficial/stationary-sync:0.0.0-dev
+
+replicas: 1
+
+resources:
+  limits:
+    cpu: "100m"
+    memory: "512Mi"
+  requests:
+    cpu: "10m"
+    memory: "128Mi"
+
+service:
+  port: 80
+
+railsMasterKey:
+  secretKeyRef:
+    name: stationary-sync-secret
+    key: rails_master_key
+
+base_domain: "stationary-sync.example"
+database:
+  adapter: "postgresql"
+  host: "localhost"
+  port: 5432
+  database: "stationary-sync"
+  username:
+    secretKeyRef:
+      name: stationary-sync-secret
+      key: database_username
+  password:
+    secretKeyRef:
+      name: stationary-sync-secret
+      key: database_password
+  pool: 5
+  timeout: 5000
+
+trusted_proxies: []

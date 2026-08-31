@@ -1,0 +1,7 @@
+apiVersion: v2
+name: stationary-sync-chart
+version: 0.0.0-dev
+type: application
+maintainers:
+  - name: TangledWires Ltd
+    email: support@tangledwires.co.uk
