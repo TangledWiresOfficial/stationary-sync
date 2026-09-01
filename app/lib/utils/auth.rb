@@ -25,16 +25,20 @@ module Utils
       )
 
       decoded.first
-    rescue JWT::DecodeError # This can happen if the signing keys have changed
+    rescue JWT::DecodeError => e # This can happen if the signing keys have changed
+      puts e
+      puts "Refreshing JWKS"
       Rails.cache.delete("jwks")
       nil
+    rescue => e
+      puts e.class.name
     end
 
     private
 
     def self.fetch_keys
       Rails.cache.fetch("jwks", expires_in: 2.hours) do
-        JSON.parse(Net::HTTP.get(URI("https://accounts.tangledwires.co.uk/application/o/stationary-sync/jwks/")), symbolize_names: true)
+        JSON.parse(Net::HTTP.get(URI("https://auth.tangledwires.co.uk/realms/master/protocol/openid-connect/certs")), symbolize_names: true)
       end
     end
   end

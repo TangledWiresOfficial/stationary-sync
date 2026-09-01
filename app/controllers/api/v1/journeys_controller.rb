@@ -2,7 +2,7 @@ class Api::V1::JourneysController < ApplicationController
   before_action :set_journey, only: [ :show, :update, :destroy ]
 
   def index
-    render json: @user.journeys.as_json(
+    render json: @user.journeys.not_soft_deleted.as_json(
       include: [ parts: { only: [ :line, :station ] } ],
       only: [ :timestamp, :uuid ]
     )
@@ -43,6 +43,7 @@ class Api::V1::JourneysController < ApplicationController
   def sync
     ActiveRecord::Base.transaction do
       sync_params[:deleted_uuids].each do |uuid|
+        next if uuid.blank?
         @user.journeys.find_by(uuid: uuid)&.soft_delete!
       end
 
