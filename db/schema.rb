@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_01_132852) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_01_144402) do
   create_table "journey_parts", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.integer "journey_id"
@@ -23,7 +23,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_01_132852) do
   create_table "journeys", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "deleted_at"
-    t.datetime "timestamp"
+    t.bigint "timestamp"
     t.datetime "updated_at", null: false
     t.integer "user_id"
     t.text "uuid"
