@@ -49,6 +49,10 @@ class Api::V1::JourneysController < ApplicationController
 
       sync_params[:journeys].each do |journey|
         next if journey.blank?
+
+        existing = @user.journeys.find_by(uuid: journey[:uuid])
+        existing.parts.each { |part| part.destroy! } if existing.present?
+
         @user.journeys.find_or_initialize_by(uuid: journey[:uuid]).update!(journey)
       end
     end

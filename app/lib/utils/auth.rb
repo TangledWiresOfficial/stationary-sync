@@ -31,7 +31,7 @@ module Utils
       Rails.cache.delete("jwks")
       nil
     rescue => e
-      puts e.class.name
+      puts e.backtrace
     end
 
     private
