@@ -7,5 +7,10 @@ pkgs.mkShell {
 
   nativeBuildInputs = with pkgs; [
     libyaml
+    vips
   ];
+
+  shellHook = ''
+    export LD_LIBRARY_PATH="${pkgs.lib.makeLibraryPath [ pkgs.vips ]}:$LD_LIBRARY_PATH"
+  '';
 }
