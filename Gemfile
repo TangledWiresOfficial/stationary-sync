@@ -54,3 +54,5 @@ gem "jwt"
 gem "gb-station-data", ">= 6.0.2"
 
 gem "ruby-vips", "~> 2.0"
+
+gem "pg"
