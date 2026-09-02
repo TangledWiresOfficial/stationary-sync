@@ -4,7 +4,7 @@ class Api::V1::JourneysController < ApplicationController
   def index
     render json: @user.journeys.not_soft_deleted.as_json(
       include: [ parts: { only: [ :line, :station ] } ],
-      only: [ :timestamp, :uuid ]
+      only: [ :timestamp, :uuid, :description ]
     )
   end
 
@@ -20,7 +20,7 @@ class Api::V1::JourneysController < ApplicationController
   def show
     render json: @journey.as_json(
       include: [ parts: { only: [ :line, :station ] } ],
-      only: [ :timestamp, :uuid ]
+      only: [ :timestamp, :uuid, :description ]
     )
   end
 
@@ -59,18 +59,18 @@ class Api::V1::JourneysController < ApplicationController
 
     render json: @user.journeys.not_soft_deleted.as_json(
       include: [ parts: { only: [ :line, :station ] } ],
-      only: [ :timestamp, :uuid ]
+      only: [ :timestamp, :uuid, :description ]
     )
   end
 
   private
 
   def journey_params
-    params.expect(journey: [ :timestamp, :uuid, parts_attributes: [ [ :line, :station ] ] ])
+    params.expect(journey: [ :timestamp, :uuid, :description, parts_attributes: [ [ :line, :station ] ] ])
   end
 
   def sync_params
-    deleted_uuids, journeys = params.expect(deleted_uuids: [], journeys: [ [ :timestamp, :uuid, parts_attributes: [ [ :line, :station ] ] ] ])
+    deleted_uuids, journeys = params.expect(deleted_uuids: [], journeys: [ [ :timestamp, :uuid, :description, parts_attributes: [ [ :line, :station ] ] ] ])
 
     { deleted_uuids:, journeys: }
   end
