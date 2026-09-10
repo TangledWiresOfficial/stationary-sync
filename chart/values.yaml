@@ -16,10 +16,10 @@ resources:
 service:
   port: 80
 
-railsMasterKey:
+secretKeyBase:
   secretKeyRef:
     name: stationary-sync-secret
-    key: rails_master_key
+    key: secret_key_base
 
 base_domain: "stationary-sync.example"
 database:

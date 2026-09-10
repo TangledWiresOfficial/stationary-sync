@@ -23,8 +23,8 @@ spec:
           imagePullPolicy: IfNotPresent
           env:
             {{- with .Values }}
-            - name: RAILS_MASTER_KEY
-              valueFrom: {{ toJson .railsMasterKey }}
+            - name: SECRET_KEY_BASE
+              valueFrom: {{ toJson .secretKeyBase }}
 
             - name: STATIONARY_SYNC_BASE_DOMAIN
               value: {{ quote .base_domain }}
