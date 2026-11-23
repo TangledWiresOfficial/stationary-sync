@@ -19,7 +19,7 @@ module ActiveSupport
     # Authenticate as a user
     # @param [User] user
     def auth_as(user)
-      Utils::Auth.test_data = { sub: user.uid }
+      Utils::Auth.test_data = { "sub" => user.uid }
     end
 
     # Log out
